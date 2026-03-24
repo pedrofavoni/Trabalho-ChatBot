@@ -10,10 +10,10 @@ pares = [
     ],
     [
         r'Qual o maior time do mundo\?',
-        ["O gigantesco VASCO DA GAMA!!!"]
+        ["É o bonde do MENGÃO SEM FREIO!!!"]
     ],
     [
-        r'quais times do brasileirao|times do brasileirao',
+        r'Quais os times do brasileirao|Times do brasileirao',
         ["Times do Brasileirão:\n"
             "Vasco\n"
             "Palmeiras\n"
