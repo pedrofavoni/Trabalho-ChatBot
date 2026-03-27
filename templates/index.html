@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Brasileirão</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        #chatbox {
+            width: 400px;
+            height: 500px;
+            background: white;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 10px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+        }
+
+        .user {
+            color: blue;
+            text-align: right;
+        }
+
+        .bot {
+            color: green;
+            text-align: left;
+        }
+
+        input {
+            width: 300px;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Chatbot Brasileirão ⚽</h2>
+
+    <div id="chatbox"></div>
+
+    <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+    <button onclick="sendMessage()">Enviar</button>
+
+    <script>
+        function sendMessage() {
+            let input = document.getElementById("userInput").value;
+
+            if (input === "") return;
+
+            let chatbox = document.getElementById("chatbox");
+
+            chatbox.innerHTML += "<p class='user'><b>Você:</b> " + input + "</p>";
+
+            fetch("/get?msg=" + input)
+                .then(response => response.json())
+                .then(data => {
+                    chatbox.innerHTML += "<p class='bot'><b>Bot:</b> " + data.response + "</p>";
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
+
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+
+</body>
+</html>

@@ -127,11 +127,3 @@ reflexoes = {
 }
 
 chatbot = Chat(pares, reflections)
-
-while True:
-    user_input = input("Você:")
-    if user_input.lower() == "sair":
-        print("Chatbot: Até mais! Vai acompanhar a próxima rodada?")
-        break
-    response = chatbot.respond(user_input)
-    print("Chatbot:", response)
