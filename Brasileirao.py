@@ -14,16 +14,16 @@ pares = [
     ],
     [
         r'Qual o maior time do mundo\?',
-        ["É o bonde do MENGÃO SEM FREIO!!! Você torce para qual time?"]
+        ["Fico em duvida entre Flamengo e Vasco, o que você acha?"]
     ],
     [
         r'Quais os times do brasileirao|Times do brasileirao',
         ["Times do Brasileirão:\n"
-         "Vasco, Palmeiras, São Paulo, Corinthians, Cuiabá, Grêmio,\n"
-         "Internacional, Atlético-MG, Cruzeiro, Botafogo,\n"
-         "Fluminense, Athletico-PR, Bahia, Fortaleza,\n"
-         "Ceará, Santos, Goiás, Coritiba, Bragantino, Flamengo.\n"
-         "Qual desses é o seu time?"]
+        "Vasco, Palmeiras, São Paulo, Corinthians, Cuiabá, Grêmio,\n"
+        "Internacional, Atlético-MG, Cruzeiro, Botafogo,\n"
+        "Fluminense, Athletico-PR, Bahia, Fortaleza,\n"
+        "Ceará, Santos, Goiás, Coritiba, Bragantino, Flamengo.\n"
+        "Qual desses é o seu time?"]
     ],
     [
         r'Quem lidera o brasileirao 2026\?',
