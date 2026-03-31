@@ -46,10 +46,16 @@
 
     <div id="chatbox"></div>
 
-    <input type="text" id="userInput" placeholder="Digite sua mensagem...">
+    <input type="text" id="userInput" placeholder="Digite sua mensagem..." onkeypress="handleKeyPress(event)">
     <button onclick="sendMessage()">Enviar</button>
 
     <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
         function sendMessage() {
             let input = document.getElementById("userInput").value;
 
