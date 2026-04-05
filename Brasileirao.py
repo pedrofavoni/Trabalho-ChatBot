@@ -30,10 +30,10 @@ class Chatbot:
         """Processa e limpa o texto com NLTK"""
         texto = texto.lower().strip()
         tokens = word_tokenize(texto)
+        tokens_raw = [palavra for palavra in tokens if palavra.isalnum() and palavra not in self.stop_words]
         # Remove stopwords e tokeniza
-        tokens_limpos = [self.stemmer.stem(palavra) for palavra in tokens 
-                        if palavra.isalnum() and palavra not in self.stop_words]
-        return tokens_limpos, texto
+        tokens_limpos = [self.stemmer.stem(palavra) for palavra in tokens_raw]
+        return tokens_limpos, texto, tokens_raw
     
     def detectar_sentimento(self, entrada):
         """Detecta se é sim/não/neutro"""
@@ -45,19 +45,19 @@ class Chatbot:
             return 'nao'
         return 'neutro'
     
-    def extrair_resposta_usuario(self, tokens, entrada):
+    def extrair_resposta_usuario(self, tokens_raw, entrada):
         """Extrai palavras-chave da resposta do usuário"""
         # Remove palavras muito curtas e stopwords
-        palavras_chave = [t for t in tokens if len(t) > 2]
+        palavras_chave = [t for t in tokens_raw if len(t) > 2]
         return ' '.join(palavras_chave[:3]) if palavras_chave else entrada
     
     def respond(self, user_input):
-        tokens, entrada = self.processar_texto(user_input)
+        tokens, entrada, tokens_raw = self.processar_texto(user_input)
         sentimento = self.detectar_sentimento(entrada)
         
         # Passo 0: Saudação
         if self.step == 0:
-            if any(palavra in tokens for palavra in ['oi', 'olá', 'tudo', 'bem']):
+            if any(palavra in tokens for palavra in ['oi', 'olá', 'ola', 'eai', 'tudo', 'bem']):
                 self.step = 1
                 return "Oi! Tudo bem? Pra começar, na sua opinião, qual é o maior time do mundo?"
             else:
@@ -65,9 +65,9 @@ class Chatbot:
         
         # Passo 1: Qual é o maior time?
         elif self.step == 1:
-            self.respostas_anteriores['maior_time'] = self.extrair_resposta_usuario(tokens, entrada)
+            self.respostas_anteriores['maior_time'] = self.extrair_resposta_usuario(tokens_raw, entrada)
             self.step = 2
-            return f"Que legal! {self.respostas_anteriores['maior_time'].title()} é uma ótima resposta. O Palmeiras foi o último campeão do Brasileirão. Você acha que ele entra como favorito também em 2026?"
+            return f"Que legal! {self.respostas_anteriores['maior_time'].title()} é uma ótima resposta. O Flamengo foi o último campeão do Brasileirão. Você acha que ele entra como favorito também em 2026?"
         
         # Passo 2: Palmeiras como favorito?
         elif self.step == 2:
@@ -90,7 +90,7 @@ class Chatbot:
         
         # Passo 5: Qual time do G4?
         elif self.step == 5:
-            self.respostas_anteriores['favorito_g4'] = self.extrair_resposta_usuario(tokens, entrada)
+            self.respostas_anteriores['favorito_g4'] = self.extrair_resposta_usuario(tokens_raw, entrada)
             self.step = 6
             time_escolhido = self.respostas_anteriores['favorito_g4'].title()
             return f"Boa escolha! O {time_escolhido} realmente merece destaque. E olhando mais pra baixo na tabela, o Vasco está no meio. Você acha que ele ainda pode brigar por algo maior?"
@@ -157,17 +157,20 @@ class Chatbot:
         # Passo 17: Clássico importante
         elif self.step == 17:
             self.step = 18
-            time_classico = self.extrair_resposta_usuario(tokens, entrada).title()
+            time_classico = self.extrair_resposta_usuario(tokens_raw, entrada).title()
             return f"Interessante! {time_classico} é realmente importante. E pensando no Flamengo contra Vasco, quem você acha que leva a melhor nesse clássico?"
         
         # Passo 18: Flamengo vs Vasco
         elif self.step == 18:
-            time_vencedor = self.extrair_resposta_usuario(tokens, entrada).title()
+            time_vencedor = self.extrair_resposta_usuario(tokens_raw, entrada).title()
             self.step = 19
             return f"Legal! Você torce pro {time_vencedor} então? Isso foi uma ótima conversa sobre futebol! ⚽"
         
         # Final
         else:
+            if any(palavra in entrada for palavra in ['oi', 'olá', 'ola', 'eai']):
+                self.step = 1
+                return "Oi! Tudo bem? Pra começar, na sua opinião, qual é o maior time do mundo?"
             return "Foi um prazer conversar sobre futebol com você! Quer começar uma nova conversa? Digite 'Oi'!"
 
 # Criar instância do chatbot

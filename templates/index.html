@@ -1,80 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Brasileirão</title>
     <style>
+        :root {
+            --bg: #0b132b;
+            --panel: #14274e;
+            --panel-alt: #1f4287;
+            --text: #f5f5f5;
+            --text-muted: #c8d5ff;
+            --accent: #00b9ff;
+            --success: #1b998b;
+            --shadow: rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
-            background-color: #f2f2f2;
-            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at top, #1d2671 0%, #0b132b 60%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .app-shell {
+            width: min(100%, 680px);
+            background: linear-gradient(180deg, rgba(20, 36, 78, 0.98), rgba(13, 19, 43, 0.98));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            box-shadow: 0 20px 80px var(--shadow);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 28px 32px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 2.4vw, 2.8rem);
+            letter-spacing: 0.03em;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         #chatbox {
-            width: 400px;
-            height: 500px;
-            background: white;
-            margin: 20px auto;
-            padding: 10px;
-            border-radius: 10px;
-            overflow-y: scroll;
-            border: 1px solid #ccc;
+            height: 520px;
+            padding: 24px 20px 12px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.08));
         }
 
-        .user {
-            color: blue;
+        .message {
+            max-width: 84%;
+            margin-bottom: 16px;
+            padding: 18px 18px 16px;
+            border-radius: 22px;
+            line-height: 1.55;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            margin-left: auto;
+            background: rgba(0, 185, 255, 0.15);
+            border: 1px solid rgba(0, 185, 255, 0.25);
+            color: #d3f1ff;
             text-align: right;
         }
 
-        .bot {
-            color: green;
+        .message.bot {
+            margin-right: auto;
+            background: rgba(27, 153, 139, 0.15);
+            border: 1px solid rgba(27, 153, 139, 0.25);
+            color: #e8f8f5;
             text-align: left;
         }
 
-        input {
-            width: 300px;
-            padding: 10px;
+        .message strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.98rem;
+        }
+
+        .footer {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 22px 24px 28px;
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        #userInput {
+            width: 100%;
+            min-height: 52px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            outline: none;
+            font-size: 1rem;
+        }
+
+        #userInput::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         button {
-            padding: 10px;
+            min-width: 120px;
+            border: none;
+            border-radius: 18px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--accent), #1b998b);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 30px rgba(0, 185, 255, 0.2);
+        }
+
+        @media (max-width: 540px) {
+            .app-shell {
+                width: 100%;
+                border-radius: 20px;
+            }
+
+            #chatbox {
+                height: 68vh;
+                padding: 18px 14px 10px;
+            }
+
+            .footer {
+                padding: 18px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="app-shell">
+        <div class="header">
+            <h1>Chatbot Brasileirão ⚽</h1>
+            <p>Converse com o bot sobre futebol, tabela e favoritos do Brasileirão em um visual moderno.</p>
+        </div>
 
-    <h2>Chatbot Brasileirão ⚽</h2>
+        <div id="chatbox"></div>
 
-    <div id="chatbox"></div>
-
-    <input type="text" id="userInput" placeholder="Digite sua mensagem..." onkeypress="handleKeyPress(event)">
-    <button onclick="sendMessage()">Enviar</button>
+        <div class="footer">
+            <input type="text" id="userInput" placeholder="Digite sua mensagem..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
 
     <script>
+        const inputEl = document.getElementById('userInput');
+        const chatbox = document.getElementById('chatbox');
+
         function handleKeyPress(event) {
-            if (event.key === "Enter") {
+            if (event.key === 'Enter') {
                 sendMessage();
             }
         }
 
+        function addMessage(role, text) {
+            const bubble = document.createElement('div');
+            bubble.className = `message ${role}`;
+            bubble.innerHTML = `<strong>${role === 'user' ? 'Você' : 'Bot'}:</strong>${text}`;
+            chatbox.appendChild(bubble);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
         function sendMessage() {
-            let input = document.getElementById("userInput").value;
+            const input = inputEl.value.trim();
+            if (!input) return;
 
-            if (input === "") return;
+            addMessage('user', input);
+            inputEl.value = '';
+            inputEl.focus();
 
-            let chatbox = document.getElementById("chatbox");
-
-            chatbox.innerHTML += "<p class='user'><b>Você:</b> " + input + "</p>";
-
-            fetch("/get?msg=" + input)
+            fetch(`/get?msg=${encodeURIComponent(input)}`)
                 .then(response => response.json())
                 .then(data => {
-                    chatbox.innerHTML += "<p class='bot'><b>Bot:</b> " + data.response + "</p>";
-                    chatbox.scrollTop = chatbox.scrollHeight;
+                    addMessage('bot', data.response);
+                })
+                .catch(() => {
+                    addMessage('bot', 'Desculpe, não foi possível conectar ao servidor.');
                 });
-
-            document.getElementById("userInput").value = "";
         }
     </script>
-
 </body>
 </html>
