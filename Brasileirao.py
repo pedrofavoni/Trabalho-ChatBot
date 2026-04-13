@@ -26,12 +26,12 @@ class Chatbot:
 
         # palavras-chave para detectar intenções
         self.intents = {
-            1: ['time', 'club', 'mai', 'mund'],
-            2: ['flameng', 'favorit'],
-            3: ['lider', 'palmeir'],
+            1: ['time', 'club'],
+            2: ['favorit'],
+            3: ['lider'],
             4: ['g4', 'libertador'],
             5: ['surpreend', 'surpresa', 'campeã'],
-            7: ['rebaix', 'zona'],
+            7: ['rebaix', 'zona', 'z4'],
             9: ['ataqu', 'gol'],
             11: ['defes'],
             15: ['artilheir'],
@@ -40,13 +40,13 @@ class Chatbot:
 
         # respostas pré-definidas para cada etapa
         self.respostas = {
-            4: "O G4 atualmente tem Palmeiras, Flamengo, Atlético-MG e Grêmio.",
-            5: "Times como Atlético-GO e Mirassol podem surpreender.",
-            7: "A zona de rebaixamento geralmente inclui os últimos colocados da tabela.",
-            9: "Os melhores ataques costumam ser de times como Palmeiras e Flamengo.",
-            11: "Defesas sólidas geralmente são de times como Atlético-MG.",
-            15: "O artilheiro costuma ser um destaque ofensivo, como Pedro do Flamengo.",
-            17: "Os clássicos mais importantes incluem Flamengo x Vasco e GreNal."
+            4: "O G4 atualmente tem Palmeiras, Flamengo, São Paulo e FluminenCe.",
+            5: "Times como Coritiba e EC Vitória podem surpreender.",
+            7: "Na zona de rebaixamento está Cruziro, Remo, Chapecoense e Mirassol.",
+            9: "O melhores ataques do Brasileirão é do Palmeiras.",
+            11: "Defesas mais sólidas até o momento é a do Flamengo.",
+            15: "O artilheiro é o Carlos Vinícius do gremio com 7 gols.",
+            17: "Os clássicos mais importantes incluem o Clássico dos Milhões, com Flamengo e Vasco e o GreNal, com Gremio e Internacional."
         }
 
     # 🔹 NLP
@@ -71,7 +71,7 @@ class Chatbot:
     # 🔹 sentimento
     def detectar_sentimento(self, texto):
         sim = ['sim', 'claro', 'aham', 'com certeza']
-        nao = ['não', 'nunca', 'jamais', 'discordo']
+        nao = ['não', 'nao', 'nunca', 'jamais', 'discordo']
 
         for s in sim:
             if s in texto:
@@ -84,7 +84,7 @@ class Chatbot:
     # 🔹 perguntas
     def pergunta_atual(self):
         perguntas = {
-            1: "Qual é o maior time do mundo na sua opinião?",
+            1: "Qual é o seu time?",
             2: "Você acha o Flamengo favorito?",
             3: "Ele mantém a liderança?",
             4: "Quem você acha que vai ser campeão entre os do G4?",
@@ -149,13 +149,13 @@ class Chatbot:
         if self.step == 0:
             if re.search(r'\b(oi|olá|ola|eai)\b', entrada):
                 self.step = 1
-                return "Fala! ⚽\nQual é o maior time do mundo?"
+                return "Fala! ⚽\nQual é o seu time?"
             return "Digite 'Oi' pra começar 😄"
 
         elif self.step == 1:
             self.memoria['time'] = user_input
             self.step = 2
-            return f"{user_input.title()} é gigante 🔥\nVocê acha o Flamengo favorito?"
+            return f"{user_input.title()} é muito bom 🔥\nVocê acha o Palmeiras favorito?"
 
         elif self.step == 2:
             self.step = 3
@@ -168,71 +168,134 @@ class Chatbot:
 
         elif self.step == 3:
             self.step = 4
-            return "Topo da tabela tá disputado!\nQuem está no G4?"
+            if sentimento == 'sim':
+                return "Ele ta sempre brigando pelo topo 🏆\nVocê sabe quem está no G4?"
+            elif sentimento == 'nao':
+                return "Realmente o topo da tabela tá disputado!\nVocê sabe quem está no G4?"
+            else:
+                return "É justo 🤔\nVocê sabe quem está no G4?"
 
         elif self.step == 4:
             self.step = 5
-            return "Só time forte ali!\nQuem você acha que vai ser campeão?"
+            if sentimento == 'sim':
+                return "Só time forte ali 🔥!\nQuem você acha que vai ser campeão?"
+            elif sentimento == 'nao':
+                return "O G4 atualmente tem Palmeiras, Flamengo, São Paulo e FluminenCe.\nQuem você acha que vai ser campeão?"
+            else:
+                return "Compreendo 🤔\nQuem você acha que vai ser campeão?"
 
         elif self.step == 5:
             self.memoria['campeao'] = user_input
             self.step = 6
-            return f"{user_input.title()} é uma boa aposta!\nO Vasco pode brigar?"
+            return f"{user_input.title()} é uma boa aposta!\nE o Vasco pode brigar?"
 
         elif self.step == 6:
             self.step = 7
-            return "Situação complicada 😅\nQuem está na zona de rebaixamento?"
+            if sentimento == 'sim':
+                return "É o gigante💢 não tem jeito!\nVocê sabe quem está na zona de rebaixamento?"
+            elif sentimento == 'nao':
+                return "Situação complicada 😅\nVocê sabe quem está na zona de rebaixamento?"
+            return "Entendo 🤔\nVocê sabe quem está na zona de rebaixamento?"
 
         elif self.step == 7:
             self.step = 8
-            return "Parte tensa 😬\nAlgum desses escapa?"
+            if sentimento == 'sim':
+                return "Parte tensa 😬\nAlgum desses escapa?"
+            elif sentimento == 'nao':
+                return "Na zona de rebaixamento está Cruziro, Remo, Chapecoense e Mirassol.\nAlgum desses escapa?"
+            else:
+                return "Faz sentido 🤔\nAlgum desses escapa?"
 
         elif self.step == 8:
             self.step = 9
-            return "Precisa reagir rápido!\nQual time tem o melhor ataque?"
+            if sentimento == 'nao':
+                return "É realmente uma situação dificil de sair 😬\nVocê sabe qual time tem o melhor ataque?"
+            else:
+                return "Precisa reagir rápido!\nVocê sabe qual time tem o melhor ataque??"
 
         elif self.step == 9:
             self.step = 10
-            return "Ataque decide muito ⚽\nVocê acha que isso ganha campeonato?"
+            if sentimento == 'sim':
+                return "Ataque decide muito ⚽\nVocê acha que isso ganha campeonato?"
+            elif sentimento == 'nao':
+                return "O melhores ataques do Brasileirão é do Palmeiras.\nVocê acha que isso ganha campeonato?"
+            else:
+                return "É justo 🤔\nVocê acha que isso ganha campeonato?"
 
         elif self.step == 10:
             self.step = 11
-            return "Defesa também conta 🛡️\nQuem tem a melhor defesa?"
+            return "Defesa também conta 🛡️\nVocê sabe quem tem a melhor defesa?"
 
         elif self.step == 11:
             self.step = 12
-            return "Equilíbrio é chave!\nEquilíbrio é mais importante?"
+            if sentimento == 'nao':
+                "Defesas mais sólidas até o momento é a do Flamengo.\nNa sua opinião o equilíbrio é mais importante?"
+            else:
+                return "Equilíbrio é chave!\nNa sua opinião o equilíbrio é mais importante?"
 
         elif self.step == 12:
             self.step = 13
-            return "Regularidade vence!\nQuem mais venceu?"
+            if sentimento == 'nao':
+                "Defesas mais sólidas até o momento é a do Flamengo.\nSabe quem tem o maior numero de vitorias?"
+            else:
+                return "Regularidade vence 🏆\nSabe quem tem o maior numero de vitorias?"
 
         elif self.step == 13:
             self.step = 14
-            return "Vitórias ajudam!\nIsso garante título?"
+            if sentimento == 'nao':
+                "Defesas mais sólidas até o momento é a do Flamengo.\nSabe quem tem o maior numero de vitorias?"
+            else:
+                return "Vitórias ajudam!\nIsso garante título?"
 
         elif self.step == 14:
             self.step = 15
-            return "Nem sempre 😄\nQuem é o artilheiro?"
+            return "É, nem sempre 😄\nE o artilheiro você sabe quem é?"
 
         elif self.step == 15:
-            self.memoria['artilheiro'] = user_input
             self.step = 16
-            return f"{user_input.title()} tá voando 🔥\nEle mantém o ritmo?"
+            if sentimento == 'sim':
+                "Ele tá voando 🔥\nEle mantém o ritmo?"
+            else:
+                return "O artilheiro é o Carlos Vinícius do gremio com 7 gols.\nEle mantém o ritmo?"
 
         elif self.step == 16:
             self.step = 17
-            return "Pode decidir jogos!\nQual clássico mais importante?"
+            if sentimento == 'sim':
+                return "Ele pode decidir jogos!\nVamo falar de clássicos, qual é o maior?"
+            elif sentimento == 'nao':
+                return "É normal alguns jogadores cair de rendimento \nVamo falar de clássicos, qual é o maior?"
+            else:
+                return "Compreendo 🤔\nVamo falar de clássicos, qual é o maior?"
+
 
         elif self.step == 17:
             self.memoria['classico'] = user_input
             self.step = 18
-            return f"{user_input.title()} é pesado 🔥\nFlamengo ou Vasco?"
+            return f"{user_input.title()} é pesado 🔥\nE no Clássico dos Milhões, Flamengo ou Vasco?"
 
         elif self.step == 18:
             self.step = 0
-            return f"{user_input.title()} hein 😄\nBoa conversa! Quer começar de novo?"
+            resposta = user_input.lower().strip()
 
+            flamengo_keywords = [
+                "flamengo","mengão", "mengao","mengo","fla"
+            ]
+
+            vasco_keywords = [
+                "vasco","vascão", "vascao","gigante da colina","vascudo","gigante"
+            ]
+
+            if any(palavra in resposta for palavra in flamengo_keywords):
+                self.step = 0
+                return "É o MENGÃO🔴⚫🦅! Ele é o maior vencedor do clássico com 168 vitórias a 139 vitórias do Vasco\nBoa conversa! Quer começar de novo?"
+
+            elif any(palavra in resposta for palavra in vasco_keywords):
+                self.step = 0
+                return "É o trem bala da Colina💢, Ele possui a maior goleada do clássico por Vas 7 x 0 Fla!\nBoa conversa! Quer começar de novo?"
+
+            else:
+                self.step = 0
+                return "Clássico é clássico 😅 emoção garantida dos dois lados!\nBoa conversa! Quer começar de novo?"
         # 🔥 FALLBACK
         return f"Não entendi 🤔\n{self.pergunta_atual()}"
 
