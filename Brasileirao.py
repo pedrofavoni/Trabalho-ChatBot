@@ -4,7 +4,7 @@ from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 import nltk
 
-# Downloads
+# Ao executar pela primeira vez
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
@@ -24,11 +24,13 @@ class Chatbot:
         self.stemmer = SnowballStemmer('portuguese')
         self.stop_words = set(stopwords.words('portuguese'))
 
-        # 🔥 INTENÇÕES → STEP
+        # palavras-chave para detectar intenções
         self.intents = {
             1: ['time', 'club', 'mai', 'mund'],
-            2: ['flamengo', 'favorit'],
+            2: ['flameng', 'favorit'],
+            3: ['lider', 'palmeir'],
             4: ['g4', 'libertador'],
+            5: ['surpreend', 'surpresa', 'campeã'],
             7: ['rebaix', 'zona'],
             9: ['ataqu', 'gol'],
             11: ['defes'],
@@ -36,9 +38,10 @@ class Chatbot:
             17: ['classic']
         }
 
-        # 🔥 RESPOSTAS REAIS
+        # respostas pré-definidas para cada etapa
         self.respostas = {
             4: "O G4 atualmente tem Palmeiras, Flamengo, Atlético-MG e Grêmio.",
+            5: "Times como Atlético-GO e Mirassol podem surpreender.",
             7: "A zona de rebaixamento geralmente inclui os últimos colocados da tabela.",
             9: "Os melhores ataques costumam ser de times como Palmeiras e Flamengo.",
             11: "Defesas sólidas geralmente são de times como Atlético-MG.",
@@ -85,7 +88,7 @@ class Chatbot:
             2: "Você acha o Flamengo favorito?",
             3: "Ele mantém a liderança?",
             4: "Quem você acha que vai ser campeão entre os do G4?",
-            5: "Quem será campeão?",
+            5: "Algum time pode surpreender?",
             6: "O Vasco pode brigar por algo maior?",
             7: "Algum desses da zona consegue escapar?",
             8: "Qual time pode reagir?",
@@ -102,12 +105,12 @@ class Chatbot:
         }
         return perguntas.get(self.step, "Vamos falar de futebol ⚽")
 
-    # 🔥 MAIN
+    #  MAIN
     def respond(self, user_input):
         stems, entrada = self.processar_texto(user_input)
         sentimento = self.detectar_sentimento(entrada)
 
-        # 🔥 PULO INTELIGENTE
+        #  PULO INTELIGENTE
         step_detectado = self.detectar_intencao(stems)
         if step_detectado:
             self.step = step_detectado
@@ -124,9 +127,15 @@ class Chatbot:
             
             if self.step == 2:
                 return f"O flamengo é um time muito forte!\n{self.pergunta_atual()}"
+            
+            if self.step == 3:
+                return f"O Palmeiras é o líder do campeonato!\n{self.pergunta_atual()}"
 
             if self.step == 4:
                 return f"{resposta}\nQuem você acha que vai ser campeão?"
+            
+            if self.step == 5:
+                return f"{resposta}\nAlgum time pode surpreender?"
 
             if self.step == 15:
                 return f"{resposta}\nVocê acha que ele mantém o ritmo?"
