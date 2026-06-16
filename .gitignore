@@ -1,2 +1,7 @@
 __pycache__/
 *.pyc
+.env
+src/.env
+venv/
+.venv/
+nltk_data/

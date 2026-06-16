@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Brasileirão</title>
+    <title>BrasileirãoBot ⚽</title>
     <style>
         :root {
             --bg: #0b132b;
@@ -16,9 +16,7 @@
             --shadow: rgba(0, 0, 0, 0.35);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -48,17 +46,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: clamp(1.8rem, 2.4vw, 2.8rem);
-            letter-spacing: 0.03em;
-        }
-
-        .header p {
-            margin: 10px 0 0;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+        .header h1 { margin: 0; font-size: clamp(1.8rem, 2.4vw, 2.8rem); letter-spacing: 0.03em; }
+        .header p { margin: 10px 0 0; color: var(--text-muted); font-size: 0.95rem; }
 
         #chatbox {
             height: 520px;
@@ -70,11 +59,12 @@
         .message {
             max-width: 84%;
             margin-bottom: 16px;
-            padding: 18px 18px 16px;
+            padding: 16px 18px 14px;
             border-radius: 22px;
             line-height: 1.55;
             position: relative;
             word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .message.user {
@@ -82,7 +72,6 @@
             background: rgba(0, 185, 255, 0.15);
             border: 1px solid rgba(0, 185, 255, 0.25);
             color: #d3f1ff;
-            text-align: right;
         }
 
         .message.bot {
@@ -90,14 +79,36 @@
             background: rgba(27, 153, 139, 0.15);
             border: 1px solid rgba(27, 153, 139, 0.25);
             color: #e8f8f5;
-            text-align: left;
         }
 
-        .message strong {
+        .message .author {
             display: block;
-            margin-bottom: 8px;
-            font-size: 0.98rem;
+            margin-bottom: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            opacity: 0.85;
         }
+
+        .source-tag {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .source-tag.base { background: rgba(27,153,139,0.3); color: #9ff5e6; border: 1px solid rgba(27,153,139,0.5); }
+        .source-tag.llm  { background: rgba(0,185,255,0.25); color: #b9e9ff; border: 1px solid rgba(0,185,255,0.5); }
+
+        .typing { font-style: italic; opacity: 0.8; }
+        .typing span {
+            display: inline-block; width: 6px; height: 6px; margin-left: 2px;
+            background: #9ff5e6; border-radius: 50%; animation: blink 1.2s infinite both;
+        }
+        .typing span:nth-child(2) { animation-delay: .2s; }
+        .typing span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink { 0%,80%,100% { opacity: .2 } 40% { opacity: 1 } }
 
         .footer {
             display: grid;
@@ -120,10 +131,7 @@
             outline: none;
             font-size: 1rem;
         }
-
-        #userInput::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
+        #userInput::placeholder { color: rgba(255, 255, 255, 0.5); }
 
         button {
             min-width: 120px;
@@ -136,40 +144,26 @@
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 14px 30px rgba(0, 185, 255, 0.2);
-        }
+        button:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0, 185, 255, 0.2); }
 
         @media (max-width: 540px) {
-            .app-shell {
-                width: 100%;
-                border-radius: 20px;
-            }
-
-            #chatbox {
-                height: 68vh;
-                padding: 18px 14px 10px;
-            }
-
-            .footer {
-                padding: 18px;
-            }
+            .app-shell { width: 100%; border-radius: 20px; }
+            #chatbox { height: 68vh; padding: 18px 14px 10px; }
+            .footer { padding: 18px; }
         }
     </style>
 </head>
 <body>
     <div class="app-shell">
         <div class="header">
-            <h1>Chatbot Brasileirão ⚽</h1>
-            <p>Converse com o bot sobre futebol, tabela e favoritos do Brasileirão.</p>
+            <h1>BrasileirãoBot ⚽</h1>
+            <p>Converse sobre tabela, artilharia, G4, rebaixamento, clássicos e os clubes do Brasileirão. As respostas mostram se vieram da <strong>base</strong> ou do <strong>LLM</strong>.</p>
         </div>
 
         <div id="chatbox"></div>
 
         <div class="footer">
-            <input type="text" id="userInput" placeholder="Digite sua mensagem..." onkeypress="handleKeyPress(event)">
+            <input type="text" id="userInput" placeholder="Ex.: quem é o líder? / me fala do Flamengo" onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">Enviar</button>
         </div>
     </div>
@@ -179,17 +173,43 @@
         const chatbox = document.getElementById('chatbox');
 
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
+            if (event.key === 'Enter') sendMessage();
         }
 
-        function addMessage(role, text) {
+        function addMessage(role, text, source) {
             const bubble = document.createElement('div');
             bubble.className = `message ${role}`;
-            bubble.innerHTML = `<strong>${role === 'user' ? 'Você' : 'Bot'}:</strong>${text}`;
+            const autor = role === 'user' ? 'Você' : 'BrasileirãoBot';
+            let html = `<span class="author">${autor}</span>${escapeHtml(text)}`;
+            if (role === 'bot' && source) {
+                const cls = source === 'llm' ? 'llm' : 'base';
+                const label = source === 'llm' ? 'Resposta do LLM' : 'Base de conhecimento';
+                html += `<div><span class="source-tag ${cls}">${label}</span></div>`;
+            }
+            bubble.innerHTML = html;
             chatbox.appendChild(bubble);
             chatbox.scrollTop = chatbox.scrollHeight;
+            return bubble;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showTyping() {
+            const bubble = document.createElement('div');
+            bubble.className = 'message bot typing';
+            bubble.id = 'typing-indicator';
+            bubble.innerHTML = `<span class="author">BrasileirãoBot</span>digitando<span></span><span></span><span></span>`;
+            chatbox.appendChild(bubble);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function removeTyping() {
+            const t = document.getElementById('typing-indicator');
+            if (t) t.remove();
         }
 
         function sendMessage() {
@@ -199,14 +219,21 @@
             addMessage('user', input);
             inputEl.value = '';
             inputEl.focus();
+            showTyping();
 
-            fetch(`/get?msg=${encodeURIComponent(input)}`)
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mensagem: input })
+            })
                 .then(response => response.json())
                 .then(data => {
-                    addMessage('bot', data.response);
+                    removeTyping();
+                    addMessage('bot', data.resposta, data.source);
                 })
                 .catch(() => {
-                    addMessage('bot', 'Desculpe, não foi possível conectar ao servidor.');
+                    removeTyping();
+                    addMessage('bot', 'Desculpe, não foi possível conectar ao servidor.', 'local');
                 });
         }
     </script>

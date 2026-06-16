@@ -1,0 +1,238 @@
+{
+  "teams": [
+    {
+      "name": "Flamengo",
+      "nicknames": ["Mengão", "Rubro-Negro", "Fla"],
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "stadium": "Maracanã",
+      "founded": 1895,
+      "titles_brasileirao": 8,
+      "coach": "Filipe Luís",
+      "position": 1,
+      "points": 70,
+      "goals_for": 62,
+      "goals_against": 28,
+      "players": [
+        { "name": "Pedro", "position": "Atacante", "number": 9, "goals": 18, "biography": "Centroavante artilheiro, revelado pelo Fluminense." },
+        { "name": "Gerson", "position": "Meio-campo", "number": 8, "goals": 6, "biography": "Volante box-to-box conhecido como 'Coringa'." },
+        { "name": "Arrascaeta", "position": "Meia", "number": 14, "goals": 12, "biography": "Meia uruguaio, principal articulador de jogadas." }
+      ],
+      "trivia": [
+        "É o clube com a maior torcida do Brasil.",
+        "Conquistou a Libertadores de 2019 com uma virada histórica sobre o River Plate.",
+        "Manda seus jogos no Maracanã, o estádio mais famoso do país."
+      ],
+      "rivals": ["Vasco", "Fluminense", "Botafogo"]
+    },
+    {
+      "name": "Palmeiras",
+      "nicknames": ["Verdão", "Porco", "Alviverde"],
+      "city": "São Paulo",
+      "state": "SP",
+      "stadium": "Allianz Parque",
+      "founded": 1914,
+      "titles_brasileirao": 12,
+      "coach": "Abel Ferreira",
+      "position": 2,
+      "points": 67,
+      "goals_for": 58,
+      "goals_against": 26,
+      "players": [
+        { "name": "Raphael Veiga", "position": "Meia", "number": 23, "goals": 10, "biography": "Meia-atacante especialista em cobranças de pênalti." },
+        { "name": "Estêvão", "position": "Atacante", "number": 41, "goals": 13, "biography": "Joia da base, um dos maiores talentos jovens do país." },
+        { "name": "Weverton", "position": "Goleiro", "number": 21, "goals": 0, "biography": "Goleiro campeão olímpico em 2016." }
+      ],
+      "trivia": [
+        "É o maior campeão brasileiro em número de títulos nacionais.",
+        "Conquistou a Libertadores em 2020 e 2021, de forma consecutiva.",
+        "O Allianz Parque é uma das arenas mais modernas da América do Sul."
+      ],
+      "rivals": ["Corinthians", "São Paulo", "Santos"]
+    },
+    {
+      "name": "Botafogo",
+      "nicknames": ["Fogão", "Glorioso", "Estrela Solitária"],
+      "city": "Rio de Janeiro",
+      "state": "RJ",
+      "stadium": "Nilton Santos",
+      "founded": 1904,
+      "titles_brasileirao": 2,
+      "coach": "Artur Jorge",
+      "position": 3,
+      "points": 64,
+      "goals_for": 55,
+      "goals_against": 30,
+      "players": [
+        { "name": "Luiz Henrique", "position": "Atacante", "number": 7, "goals": 11, "biography": "Ponta veloz que retornou ao futebol brasileiro vindo do Betis." },
+        { "name": "Thiago Almada", "position": "Meia", "number": 10, "goals": 9, "biography": "Meia argentino campeão do mundo em 2022." },
+        { "name": "John", "position": "Goleiro", "number": 1, "goals": 0, "biography": "Goleiro destaque com grandes defesas na temporada." }
+      ],
+      "trivia": [
+        "Conquistou a Libertadores de 2024, sua primeira na competição.",
+        "Tem como símbolo a estrela solitária no manto preto e branco.",
+        "Garrincha, ídolo máximo, brilhou pelo clube nos anos 1950 e 1960."
+      ],
+      "rivals": ["Flamengo", "Vasco", "Fluminense"]
+    },
+    {
+      "name": "São Paulo",
+      "nicknames": ["Tricolor", "Soberano", "SPFC"],
+      "city": "São Paulo",
+      "state": "SP",
+      "stadium": "Morumbis",
+      "founded": 1930,
+      "titles_brasileirao": 6,
+      "coach": "Luis Zubeldía",
+      "position": 4,
+      "points": 59,
+      "goals_for": 48,
+      "goals_against": 33,
+      "players": [
+        { "name": "Lucas Moura", "position": "Atacante", "number": 7, "goals": 8, "biography": "Ídolo da torcida, voltou ao clube após passagem pela Europa." },
+        { "name": "Calleri", "position": "Atacante", "number": 9, "goals": 14, "biography": "Centroavante argentino, referência no ataque." },
+        { "name": "Rafael", "position": "Goleiro", "number": 23, "goals": 0, "biography": "Goleiro experiente e capitão do time." }
+      ],
+      "trivia": [
+        "Foi o primeiro clube brasileiro a conquistar o Mundial de forma tricampeã (1992, 1993, 2005).",
+        "O Morumbis é um dos maiores estádios do Brasil.",
+        "Tem em sua história ídolos como Rogério Ceni, Raí e Careca."
+      ],
+      "rivals": ["Corinthians", "Palmeiras", "Santos"]
+    },
+    {
+      "name": "Internacional",
+      "nicknames": ["Colorado", "Inter", "Clube do Povo"],
+      "city": "Porto Alegre",
+      "state": "RS",
+      "stadium": "Beira-Rio",
+      "founded": 1909,
+      "titles_brasileirao": 3,
+      "coach": "Roger Machado",
+      "position": 5,
+      "points": 55,
+      "goals_for": 44,
+      "goals_against": 34,
+      "players": [
+        { "name": "Alan Patrick", "position": "Meia", "number": 10, "goals": 12, "biography": "Camisa 10 e principal nome do meio-campo colorado." },
+        { "name": "Borré", "position": "Atacante", "number": 9, "goals": 9, "biography": "Centroavante colombiano com bom faro de gol." },
+        { "name": "Rochet", "position": "Goleiro", "number": 1, "goals": 0, "biography": "Goleiro uruguaio, titular da seleção." }
+      ],
+      "trivia": [
+        "Conquistou a Libertadores em 2006 e 2010.",
+        "O Beira-Rio foi uma das sedes da Copa do Mundo de 2014.",
+        "Tem como maior rival o Grêmio, no clássico Gre-Nal."
+      ],
+      "rivals": ["Grêmio"]
+    },
+    {
+      "name": "Corinthians",
+      "nicknames": ["Timão", "Coringão", "Fiel"],
+      "city": "São Paulo",
+      "state": "SP",
+      "stadium": "Neo Química Arena",
+      "founded": 1910,
+      "titles_brasileirao": 7,
+      "coach": "Ramón Díaz",
+      "position": 12,
+      "points": 42,
+      "goals_for": 38,
+      "goals_against": 40,
+      "players": [
+        { "name": "Yuri Alberto", "position": "Atacante", "number": 9, "goals": 13, "biography": "Centroavante jovem e principal goleador do time." },
+        { "name": "Rodrigo Garro", "position": "Meia", "number": 10, "goals": 7, "biography": "Meia argentino de excelente passe e finalização." },
+        { "name": "Hugo Souza", "position": "Goleiro", "number": 1, "goals": 0, "biography": "Goleiro que se firmou como titular na temporada." }
+      ],
+      "trivia": [
+        "Conquistou a Libertadores e o Mundial de Clubes em 2012.",
+        "Tem uma das maiores torcidas do mundo, a 'Fiel'.",
+        "A Neo Química Arena foi palco de abertura da Copa de 2014."
+      ],
+      "rivals": ["Palmeiras", "São Paulo", "Santos"]
+    },
+    {
+      "name": "Cruzeiro",
+      "nicknames": ["Raposa", "Cabuloso", "Maior de Minas"],
+      "city": "Belo Horizonte",
+      "state": "MG",
+      "stadium": "Mineirão",
+      "founded": 1921,
+      "titles_brasileirao": 4,
+      "coach": "Fernando Diniz",
+      "position": 7,
+      "points": 50,
+      "goals_for": 41,
+      "goals_against": 35,
+      "players": [
+        { "name": "Matheus Pereira", "position": "Meia", "number": 10, "goals": 11, "biography": "Meia habilidoso, principal jogador do elenco." },
+        { "name": "Gabigol", "position": "Atacante", "number": 9, "goals": 8, "biography": "Artilheiro com passagens marcantes no futebol brasileiro." },
+        { "name": "Cássio", "position": "Goleiro", "number": 12, "goals": 0, "biography": "Goleiro experiente e ídolo no futebol nacional." }
+      ],
+      "trivia": [
+        "Conquistou a Libertadores em 1976 e 1997.",
+        "O Mineirão é um dos maiores estádios do Brasil.",
+        "Tem como maior rival o Atlético Mineiro, no clássico mineiro."
+      ],
+      "rivals": ["Atlético-MG"]
+    },
+    {
+      "name": "Fortaleza",
+      "nicknames": ["Leão do Pici", "Tricolor de Aço"],
+      "city": "Fortaleza",
+      "state": "CE",
+      "stadium": "Castelão",
+      "founded": 1918,
+      "titles_brasileirao": 0,
+      "coach": "Juan Pablo Vojvoda",
+      "position": 18,
+      "points": 32,
+      "goals_for": 30,
+      "goals_against": 48,
+      "players": [
+        { "name": "Moisés", "position": "Atacante", "number": 11, "goals": 9, "biography": "Ponta veloz e um dos destaques do clube cearense." },
+        { "name": "Lucero", "position": "Atacante", "number": 9, "goals": 10, "biography": "Centroavante argentino, referência ofensiva." },
+        { "name": "João Ricardo", "position": "Goleiro", "number": 1, "goals": 0, "biography": "Goleiro seguro e líder da defesa." }
+      ],
+      "trivia": [
+        "Voltou à elite do futebol brasileiro em 2019 após anos nas divisões inferiores.",
+        "Sob o comando de Vojvoda, disputou competições continentais.",
+        "Manda seus jogos na Arena Castelão, em Fortaleza."
+      ],
+      "rivals": ["Ceará"]
+    }
+  ],
+  "coaches": [
+    {
+      "name": "Abel Ferreira",
+      "biography": "Treinador português que comanda o Palmeiras desde 2020, com forte trabalho tático.",
+      "teams": ["Palmeiras", "Braga", "PAOK"],
+      "style": "intensidade defensiva, transições rápidas e forte preparação tática"
+    },
+    {
+      "name": "Filipe Luís",
+      "biography": "Ex-lateral e ídolo do Flamengo, iniciou a carreira de treinador no próprio clube.",
+      "teams": ["Flamengo"],
+      "style": "posse de bola, marcação alta e valorização da base"
+    },
+    {
+      "name": "Artur Jorge",
+      "biography": "Treinador português que conduziu o Botafogo ao título da Libertadores de 2024.",
+      "teams": ["Botafogo", "Braga"],
+      "style": "equipe compacta, pressão e contra-ataques verticais"
+    },
+    {
+      "name": "Fernando Diniz",
+      "biography": "Treinador brasileiro conhecido pelo estilo de jogo apelidado de 'dinizismo'.",
+      "teams": ["Cruzeiro", "Fluminense", "São Paulo", "Seleção Brasileira"],
+      "style": "posse de bola apoiada, aproximações e jogo relacional"
+    }
+  ],
+  "classics": [
+    { "name": "Fla-Flu", "teams": ["Flamengo", "Fluminense"], "description": "Clássico das multidões no Rio de Janeiro." },
+    { "name": "Derby Paulista", "teams": ["Palmeiras", "Corinthians"], "description": "Maior rivalidade do futebol paulista." },
+    { "name": "Majestoso", "teams": ["São Paulo", "Corinthians"], "description": "Clássico tradicional entre dois gigantes de São Paulo." },
+    { "name": "Choque-Rei", "teams": ["São Paulo", "Palmeiras"], "description": "Clássico que decide muitas posições na tabela." },
+    { "name": "Gre-Nal", "teams": ["Grêmio", "Internacional"], "description": "Maior rivalidade do futebol gaúcho." },
+    { "name": "Clássico Mineiro", "teams": ["Cruzeiro", "Atlético-MG"], "description": "Principal clássico de Minas Gerais." }
+  ]
+}
